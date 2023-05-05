@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<title> Algo </title>
+
+<!-- <script type="text/javascript" src="algo.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.js"></script>
+<script src="https://tonejs.github.io/build/Tone.js"></script>
+
+<!-- let button;
+function setup() {
+  createCanvas(100, 100);
+  background(0);
+  button = createButton('click me');
+  button.position(0, 0);
+  button.mousePressed(changeBG);
+}
+
+function changeBG() {
+  let val = random(255);
+  background(val);
+} -->
+
+
+<script>
+    const synths = []  
+
+    const notes = [
+        'C#3', 'D#3', 'E3', 'F#3', 'G#3', 'A3', 'B3',
+        'C#4', 'D#4', 'E4', 'F#4', 'G#4', 'A4', 'B4',
+        'C#5', 'D#5', 'E5', 'F#5', 'G#5', 'A5', 'B5',
+    ]
+
+    const cols = 21
+    const diam = 20
+    const draw_diam = 5
+    const balls = []
+
+    const reverb = new Tone.Reverb({ decay: 25, wet: 0.5 }).toDestination()
+
+    // Function to calculate ball positions
+    // ------------------------------------
+
+    function createBall (i) {
+        const offsetX = innerWidth / 2 - ((cols * diam) / 2)
+        const x = i * diam + offsetX
+        const y = innerHeight / 2
+        const r = diam / 2
+        return { x, y, r }
+    }
+
+
+    // trying to abstract
+
+    /** 
+     * what i could change:
+        * octaves
+        * the sound? like drum etc
+        * colors ofc - randomize/make lst?
+        * speed?
+     * 
+     * ceil for how many can happen
+     * buttons to start, pause/stop?
+     * 
+     * 
+    */
+
+    function new_thing () {
+
+    }
+
+    // p5.js Setup/Draw
+    // -----------------
+
+    // function toggles(){
+    //     let button_1;
+    //     button_1 = createButton('click me');
+    //     button_1.position(0, 0);
+    //     button_1.mousePressed();
+        
+    // }
+
+    function setup () {
+        createCanvas(innerWidth, innerHeight)
+        
+        for (let i = 0; i < cols; i++) {
+            // create circles
+            balls.push(createBall(i))
+            
+            // create synths
+            const s = new Tone.PolySynth()
+            s.connect(reverb)
+            synths.push(s)
+        }
+    }
+
+    function draw () {
+        background(220)
+            
+        // update circles
+        const range = height/4
+        const offset = height/2 - draw_diam/2
+        const ground = height*0.75
+        
+        balls.forEach((b, i) => {
+            // adjust y
+            const scaler = i * 0.0002 + 0.02
+            b.y = Math.sin(frameCount * scaler) * range + offset
+            
+            // play tone 
+            if (b.y + draw_diam/2 >= ground - 1) {
+                fill(255, 12, 230)
+                const n = notes[i]
+                const s = synths[i]
+                s.triggerAttackRelease(n, '8n', Tone.now(), 0.1)
+            } else {
+                fill(134, 123, 220)
+            }
+            
+            // draw circle
+            circle(b.x, b.y, draw_diam/2 * 2)
+        })
+        
+        // // draw springs
+        // for (let i = 0; i < cols - 1; i++) {
+        //     const a = balls[i]
+        //     const b = balls[i + 1]
+        //     line(a.x, a.y, b.x, b.y)
+        // }
+        
+        // draw floor
+        line(width * 0.2, ground, width * 0.8, ground)
+    }
+
+</script>
