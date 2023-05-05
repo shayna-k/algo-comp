@@ -2,7 +2,6 @@
 
 <title> Algo </title>
 
-<!-- <script type="text/javascript" src="algo.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.js"></script>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 
@@ -19,7 +18,6 @@ function changeBG() {
   let val = random(255);
   background(val);
 } -->
-
 
 <script>
     const synths = []  
@@ -64,19 +62,28 @@ function changeBG() {
      * 
     */
 
-    function new_thing () {
+    function spring_new () {
+        // setup should be general - keep it outside
+
+        // need to abstract/change the following:
+        // - sounds/tone/octave? - can be options u select or a control bar thing
+        // - reset colors 
+        // - speed can be a button that inc/dec so input that 
 
     }
 
+
+
     // p5.js Setup/Draw
     // -----------------
+
+    // ********** this should be called in setup? ***********
 
     // function toggles(){
     //     let button_1;
     //     button_1 = createButton('click me');
     //     button_1.position(0, 0);
     //     button_1.mousePressed();
-        
     // }
 
     function setup () {
@@ -120,7 +127,7 @@ function changeBG() {
             circle(b.x, b.y, draw_diam/2 * 2)
         })
         
-        // // draw springs
+        // draw springs
         // for (let i = 0; i < cols - 1; i++) {
         //     const a = balls[i]
         //     const b = balls[i + 1]
